@@ -13,13 +13,13 @@ Sistema web que conecta **doadores** a **ONGs**. ONGs cadastram pedidos de doaç
 ---
 
 ## 👥 Equipe
-- Nome 1 — RA | Papel  
-- Nome 2 — RA | Papel  
-- Nome 3 — RA | Papel  
-- Nome 4 — RA | Papel  
-- Nome 5 — RA | Papel  
+- Daniell Wendyson — 1362217242 | Desenvolvedor Full-Stack
+- João Paulo da Silva Bezerra — 1362219136 | Desenvolvedor Front-end
+- Weslley Martins Marreiro  — 1362216874 | Desenvolvedor Back-end
+- Caio Alex Donato Leitão — 1362222306 | QA / Testes
 
-> Representante: **Nome 1**
+
+> Representante: **Daniell Wendyson**
 
 ---
 
@@ -103,6 +103,6 @@ newman run tests/postman/conecta-acao.postman_collection.json   -e tests/postman
 ---
 
 ## 🌐 GitHub Pages
-[Link para a landing page do projeto](https://seuusuario.github.io/repositorio)
+[Link para a landing page do projeto](https://jaumpauulo.github.io/Conecta-Acao-A3/)
 
 > A landing é estática (HTML/Markdown/Jekyll) e deve conter: nome, objetivo, pitch (vídeo/link), tecnologias, **prints** (`/docs/prints`), link do repositório e equipe.

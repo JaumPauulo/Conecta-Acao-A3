@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel da ONG — Conecta Ação</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .badge {
+      display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;
+      background:#ffe08a;color:#2a1d00;border:1px solid rgba(0,0,0,.08);margin-left:8px
+    }
+    /* Kanban – evitar scroll horizontal e quebrar palavras longas */
+    .col-list, #headerIntencoes { overflow-x: hidden; }
+    .card, .kcard { max-width: 100%; word-break: break-word; }
+    .kbadge { display:inline-block; padding:4px 8px; border-radius:999px; background:rgba(255,255,255,.12); }
+    .kcard {
+      padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.06);
+    }
+    .kcard.blue   { background:rgba(140,180,255,.14); border-color:rgba(140,180,255,.35); }
+    .kcard.yellow { background:rgba(255,224,138,.14); border-color:rgba(255,224,138,.35); }
+    .kcard.green  { background:rgba(89,224,207,.14);  border-color:rgba(89,224,207,.35); }
+  </style>
+</head>
+<body>
+  <main class="page-center">
+    <section class="card" style="max-width:1100px;width:100%">
+      <!-- Cabeçalho -->
+      <header style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
+        <div>
+          <h2>Painel da ONG <span id="pendentesBadge" class="badge" style="display:none"></span></h2>
+          <p class="muted">Gerencie seus pedidos de doação e acompanhe intenções</p>
+        </div>
+        <div class="row">
+          <a class="btn outline" href="index.html">Trocar perfil</a>
+          <a class="btn outline" href="php/actions/logout.php">Sair</a>
+        </div>
+      </header>
+
+      <!-- Barra título + ação -->
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h3>Seus pedidos</h3>
+        <button class="btn" id="btnNovo">Criar pedido</button>
+      </div>
+
+      <!-- Tabela de pedidos -->
+      <div class="card" style="padding:0;background:rgba(255,255,255,.04);overflow:auto">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="text-align:left;color:#93a0af">
+              <th style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)">Título</th>
+              <th style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)">Categoria</th>
+              <th style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)">Qtde</th>
+              <th style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)">Status</th>
+              <th style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyPedidos"></tbody>
+        </table>
+      </div>
+
+      <!-- Modal Criar/Editar Pedido -->
+      <div id="modalForm" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px">
+        <div class="card" style="max-width:640px;width:100%;position:relative">
+          <button id="closeForm" class="btn outline" style="position:absolute;right:10px;top:10px">Fechar</button>
+          <h3 id="formTitle">Criar Pedido</h3>
+          <form id="pedidoForm" class="form" onsubmit="return false">
+            <input type="hidden" id="pedidoId" />
+            <label>Título</label>
+            <input id="titulo" required />
+            <label>Descrição</label>
+            <textarea id="descricao"></textarea>
+            <label>Categoria</label>
+            <input id="categoria" placeholder="Alimentos, Roupas, ..." />
+            <label>Quantidade</label>
+            <input id="quantidade" type="number" min="1" value="1" />
+            <div class="row">
+              <button class="btn" id="btnSalvar">Salvar</button>
+              <button class="btn outline" id="btnCancelar" type="button">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal Intenções por Pedido (KANBAN 2 colunas) -->
+<div id="modalIntencoes" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px">
+  <div class="card" style="max-width:1000px;width:100%;position:relative;overflow:hidden">
+    <button id="closeIntencoes" class="btn outline" style="position:absolute;right:10px;top:10px">Fechar</button>
+    <h3 id="tituloIntencoes">Intenções — Pedido</h3>
+
+    <!-- Header de progresso -->
+    <ul id="headerIntencoes" style="list-style:none;padding:0;margin:8px 0 12px"></ul>
+
+    <!-- KANBAN (Pendentes / Concluídas) -->
+    <div class="kanban" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;overflow-x:hidden">
+      <section class="card" style="padding:10px;overflow-x:hidden;background:rgba(255,224,138,.10);border:1px solid rgba(255,224,138,.2)">
+        <h4 style="margin-bottom:6px">Pendentes</h4>
+        <div id="colPendentes" class="col-list" style="display:flex;flex-direction:column;gap:8px;overflow-x:hidden"></div>
+      </section>
+
+      <section class="card" style="padding:10px;overflow-x:hidden;background:rgba(89,224,207,.10);border:1px solid rgba(89,224,207,.2)">
+        <h4 style="margin-bottom:6px">Concluídas</h4>
+        <div id="colConcluidas" class="col-list" style="display:flex;flex-direction:column;gap:8px;overflow-x:hidden"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+    </section>
+  </main>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/painel_ong.js"></script>
+</body>
+</html>

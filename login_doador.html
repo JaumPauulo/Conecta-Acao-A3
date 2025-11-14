@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Doador — Conecta Ação</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <main class="page-center">
+    <section class="card">
+      <h2>Login — Doador</h2>
+
+      <!-- Login -->
+      <form action="php/actions/login_doador.php" method="POST" class="form" autocomplete="on">
+        <label>Email</label>
+        <input type="email" name="email" required />
+        <label>Senha</label>
+        <input type="password" name="senha" required />
+        <div class="row">
+          <button class="btn" type="submit">Entrar</button>
+          <a class="btn outline" href="index.html">Voltar</a>
+        </div>
+      </form>
+
+      <hr />
+
+      <!-- Cadastro (aparece via JS) -->
+      <p>Não tem conta?
+        <a href="#" id="showRegisterDonor">Cadastre-se como doador</a>
+      </p>
+
+      <form id="registerDonorForm" action="php/actions/cadastro_doador.php" method="POST" class="form hidden" autocomplete="on">
+        <label>Nome</label>
+        <input type="text" name="nome" required />
+        <label>Email</label>
+        <input type="email" name="email" required />
+        <label>Telefone</label>
+        <input type="text" name="telefone" />
+        <label>Senha</label>
+        <input type="password" name="senha" required />
+        <div class="row">
+          <button class="btn" type="submit">Cadastrar</button>
+          <button class="btn outline" type="button" id="cancelRegisterDonor">Cancelar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

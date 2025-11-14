@@ -1,0 +1,195 @@
+/* ---------- Reset/Setup ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+  color: #e6eef6;
+  background: radial-gradient(1200px 600px at 10% -10%, #133a53 0%, transparent 60%),
+              radial-gradient(800px 800px at 110% 10%, #2b1353 0%, transparent 55%),
+              #0a1220;
+}
+
+/* ---------- Layout ---------- */
+.page-center {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 26px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.14));
+  box-shadow: 0 18px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(6px);
+  animation: cardIn .35s ease-out both;
+}
+@keyframes cardIn {
+  from { transform: translateY(8px); opacity: .0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.main-card { text-align: center; }
+
+/* ---------- Typography ---------- */
+h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: .3px; }
+h2 { margin: 0 0 12px; font-size: 22px; }
+.lead { margin: 0 0 16px; color: #a7b3c2; }
+.muted { color: #93a0af; font-size: 13px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  --bg: #59e0cf;
+  --fg: #08202a;
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: var(--fg);
+  background: var(--bg);
+  box-shadow: 0 6px 18px rgba(89,224,207,.25);
+  transition: transform .08s ease, box-shadow .2s ease, filter .2s ease, opacity .2s;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(89,224,207,.35); filter: saturate(1.05); }
+.btn:active { transform: translateY(0); box-shadow: 0 4px 12px rgba(89,224,207,.25); }
+.btn.big { padding: 14px 18px; font-size: 16px; }
+
+.btn.outline {
+  --fg: #c7d2df;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: none;
+}
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: 8px; margin-top: 6px; }
+label { font-size: 13px; color: #a8b4c3; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: #e6eef6;
+  outline: none;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+input::placeholder, textarea::placeholder { color: #96a3b3; }
+input:focus, textarea:focus, select:focus {
+  border-color: #59e0cf;
+  box-shadow: 0 0 0 3px rgba(89,224,207,.18);
+  background: rgba(255,255,255,.06);
+}
+textarea { min-height: 100px; resize: vertical; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,.12);
+  margin: 16px 0;
+}
+
+.choice-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0 10px;
+}
+@media (max-width: 480px) {
+  .choice-row { grid-template-columns: 1fr; }
+}
+
+/* ---------- Helpers ---------- */
+.hidden { display: none !important; }
+
+/* ---------- Banners/Feedback ---------- */
+.banner {
+  display: none;
+  margin: 10px 0 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+.banner.show { display: block; }
+.banner.ok {
+  color: #082620;
+  background: #bdf4ea;
+  border: 1px solid #94e8da;
+}
+.banner.err {
+  color: #2c0f10;
+  background: #ffd8dd;
+  border: 1px solid #ffb4be;
+}
+
+/* ====== ESCOPADO AO MODAL DO KANBAN (NÃO MEXE NAS TELAS DE LOGIN) ====== */
+#modalIntencoes .col-list,
+#modalIntencoes #headerIntencoes {
+  overflow-x: hidden;
+}
+
+#modalIntencoes .kcard {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.06);
+  max-width: 100%;
+  word-break: break-word;
+}
+
+#modalIntencoes .kbadge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+}
+
+#modalIntencoes .kcard.blue   { background: rgba(140,180,255,.14); border-color: rgba(140,180,255,.35); }
+#modalIntencoes .kcard.yellow { background: rgba(255,224,138,.14); border-color: rgba(255,224,138,.35); }
+#modalIntencoes .kcard.green  { background: rgba(89,224,207,.14);  border-color: rgba(89,224,207,.35); }
+
+/* Grid do kanban (somente dentro do modal) */
+#modalIntencoes .kanban {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  overflow-x: hidden;
+}
+
+
+/* Chip/Badge reutilizável */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  color: #e9eef5;
+  white-space: nowrap;
+}
+.chip svg { width: 14px; height: 14px; opacity: .9; }
+
+/* Variação “já doou” — tom verdinho */
+.chip--donated {
+  background: rgba(89,224,207,.15);
+  border-color: rgba(89,224,207,.35);
+  color: #dff7f3;
+}
+
+/* versão compacta p/ alinhar à direita no cabeçalho do card */
+.chip--right {
+  margin-left: auto;
+}

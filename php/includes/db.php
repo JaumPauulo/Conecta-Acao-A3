@@ -1,9 +1,9 @@
 <?php
 // php/includes/db.php
 $DB_HOST = '127.0.0.1';
-$DB_NAME = 'conecta_acao'; // certifique-se de criar manualmente no phpMyAdmin
+$DB_NAME = 'conecta_acao'; 
 $DB_USER = 'root';
-$DB_PASS = ''; // ajuste se tiver senha
+$DB_PASS = ''; 
 
 try {
   $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4", $DB_USER, $DB_PASS, [
